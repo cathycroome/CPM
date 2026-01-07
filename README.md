@@ -23,30 +23,30 @@ cpm_kfold_test_example.m demonstrates how to run CPM using K-fold cross validati
 
 Compared to the original NITRC package, the following modifications have been made:
 
-permutation_test_example.m
+`permutation_test_example.m`
 - Added functionality to split permutations across HPC job arrays.
 - Renamed to permutation_test_batch.m
 
-predict_behavior.m
+`predict_behavior.m`
 - Pos/neg models removed.
 - Added validation metrics (PRESS, RMSE, prediction R²).
 - Reports number of selected edges per fold.
 - Optional scatterplot and boxplot outputs.
 
 New functions/scripts
-- merge_perm_batches.m: merges permutation results across array jobs, computes p-value, saves combined outputs.
-- normality_checks.m: computes skewness, kurtosis, and Lilliefors test; produces histogram + Q–Q plot and exports QC figure.
-- permutation_test_nested.m: runs CPM with outer LOOCV + optional inner-K-Fold tuning of p-threshold (parallelised permutation testing).
-- tune inner.m: runs K-fold inner CV for threshold tuning
-- prog.tick.m: helper function to print progress for permutation_test_nested.m
-- perm_batch.sh: runs batched permutation workflow (example SLURM submission script for running the batched permutation workflow on Stanage HPC)
-- perm_nest.sh: runs parallelised permutation workflow (example SLURM submission script for running the nested/parallelised permutation workflow on Stanage HPC)
+- `merge_perm_batches.m` merges permutation results across array jobs, computes p-value, saves combined outputs.
+- `normality_checks.m` computes skewness, kurtosis, and Lilliefors test; produces histogram + Q–Q plot and exports QC figure.
+- `permutation_test_nested.m` runs CPM with outer LOOCV + optional inner-K-Fold tuning of p-threshold (parallelised permutation testing).
+- `tune inner.m` runs K-fold inner CV for threshold tuning
+- `prog.tick.m` helper function to print progress for permutation_test_nested.m
+- `perm_batch.sh` runs batched permutation workflow (example SLURM submission script for running the batched permutation workflow on Stanage HPC)
+- `perm_nest.sh` runs parallelised permutation workflow (example SLURM submission script for running the nested/parallelised permutation workflow on Stanage HPC)
 
 --------
 
 ## Workflows (choose one)
  
-1) permutation_test_batch.m
+1) `permutation_test_batch.m`
 
 - Runs fixed-threshold CPM permutations serially; each array task processes a slice of iterations and writes a batch file.
 - When to use: Large permutation counts on HPC with job arrays (runs faster than nested when not threshold tuning)
@@ -55,7 +55,7 @@ New functions/scripts
 - After: Run merge_perm_batches.m to combine all batch files and compute the p-value.
 
 
-2) permutation_test_nested.m
+2) `permutation_test_nested.m`
 
 - Runs CPM with outer LOOCV and (optional) inner 5-fold CV to tune the p-threshold per outer fold (from {.001, .01, .05}); also performs permutation testing in-process.
 - When to use: You need threshold tuning and/or want permutations handled within a single job.
